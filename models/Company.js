@@ -5,7 +5,7 @@ const companySchema = new mongoose.Schema(
     Name: { type: String, required: true },
     Location: { type: String, required: false },
     Industry: { type: String, required: false },
-    Phone: { type: String, required: true },
+    Phone: { type: String, required: true, unique: true },
   },
   { timestamps: true }
 );
