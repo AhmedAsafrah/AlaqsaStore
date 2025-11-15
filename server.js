@@ -2,23 +2,34 @@ const express = require("express");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 
-// security
+// Routes
+const customersRouter = require("./routes/customers");
+const productsRouter = require("./routes/products");
+const companiesRouter = require("./routes/companies");
 
 dotenv.config();
 
 const dbConnection = require("./config/database");
 const AppError = require("./utils/appError");
 const globalError = require("./middleware/globalError");
+const invoicesRouter = require("./routes/invoices");
+const invoiceDetailsRouter = require("./routes/invoiceDetails");
 
 // Connect to Database
 dbConnection();
 
 const app = express();
 
-
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Mount routes
+app.use("/api/v1/products", productsRouter);
+app.use("/api/v1/companies", companiesRouter);
+app.use("/api/v1/customers", customersRouter);
+app.use("/api/v1/invoices", invoicesRouter);
+app.use("/api/v1/invoicedetails", invoiceDetailsRouter);
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
